@@ -1,6 +1,6 @@
 // App config in a production environment.
 
-import winston from 'winston'
+import winston from 'winston';
 
 
 const apiBaseUrl = process.env.API_URL || 'https://fr.openfisca.org/api/v21',
@@ -27,7 +27,7 @@ const apiBaseUrl = process.env.API_URL || 'https://fr.openfisca.org/api/v21',
       countryName: 'France',
       search_placeholder: 'smic, salaire net',
     }
-  }
+  };
 
 
 export default {
@@ -39,4 +39,4 @@ export default {
   useCommitReferenceFromApi,
   websiteUrl,
   winstonConfig,
-}
+};

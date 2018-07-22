@@ -14,4 +14,4 @@ export default {
       search_placeholder: 'rates rebate, threshold',
     }
   }
-}
+};
