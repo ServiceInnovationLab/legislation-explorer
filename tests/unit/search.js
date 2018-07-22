@@ -1,7 +1,7 @@
 import {addNormalizedDescription, findParametersAndVariables} from '../../src/search'
-import {equals} from "ramda"
-import assert from "assert"
-import should from "should"
+import {equals} from 'ramda'
+import assert from 'assert'
+import should from 'should'
 
 const parameters = addNormalizedDescription({
   'aah': {description: 'Allocation adulte handicapé'},
