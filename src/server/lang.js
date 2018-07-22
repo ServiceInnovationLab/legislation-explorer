@@ -12,7 +12,7 @@ export function loadTranslations(langDir) {
   var messages = {}
   readdir(langDir, (err, files) => {
     if (err) {
-      throw new Error("Unable to load translation files from '" + langDir + "' directory. See following error for more information: " + err)
+      throw new Error('Unable to load translation files from \'' + langDir + '\' directory. See following error for more information: ' + err)
     }
 
     files.forEach(file => {
