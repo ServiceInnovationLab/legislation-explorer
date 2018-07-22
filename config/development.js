@@ -1,6 +1,6 @@
 // App config in a development environment.
 
-import winston from 'winston'
+import winston from 'winston';
 
 
 const HOST = process.env.HOST || 'localhost',
@@ -22,7 +22,7 @@ const HOST = process.env.HOST || 'localhost',
     fr: {
       countryName: 'l’environnement de développement',
     }
-  }
+  };
 
 
 export default {
@@ -34,4 +34,4 @@ export default {
   useCommitReferenceFromApi,
   websiteUrl,
   winstonConfig,
-}
+};
