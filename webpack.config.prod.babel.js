@@ -1,14 +1,14 @@
 // Webpack config for creating the production bundle.
 
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import path from 'path'
-import webpack from 'webpack'
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import path from 'path';
+import webpack from 'webpack';
 
-import writeAssets from './src/server/write-assets'
+import writeAssets from './src/server/write-assets';
 
 
-const assetsPath = path.join(__dirname, 'public')
-const basename = process.env.BASENAME || ''
+const assetsPath = path.join(__dirname, 'public');
+const basename = process.env.BASENAME || '';
 
 module.exports = {
   // devtool: "eval", // Transformed code
@@ -75,6 +75,6 @@ module.exports = {
       },
     }),
 
-    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
+    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))); },
   ],
-}
+};

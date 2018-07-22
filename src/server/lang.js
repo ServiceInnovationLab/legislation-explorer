@@ -1,48 +1,48 @@
-import config from '../config'
+import config from '../config';
 
-import path from 'path'
-import {readdir} from 'fs'
-import acceptLanguage from 'accept-language'
+import path from 'path';
+import {readdir} from 'fs';
+import acceptLanguage from 'accept-language';
 
 
-const DEFAULT_LANGUAGE = 'en'
+const DEFAULT_LANGUAGE = 'en';
 
 
 export function loadTranslations(langDir) {
-  var messages = {}
+  var messages = {};
   readdir(langDir, (err, files) => {
     if (err) {
-      throw new Error("Unable to load translation files from '" + langDir + "' directory. See following error for more information: " + err)
+      throw new Error("Unable to load translation files from '" + langDir + "' directory. See following error for more information: " + err);
     }
 
     files.forEach(file => {
-      messages[path.basename(file, '.json')] = require(path.resolve(langDir, file))
-    })
+      messages[path.basename(file, '.json')] = require(path.resolve(langDir, file));
+    });
 
       // load all config-provided locale strings
     Object.keys(messages).forEach(lang => {
-      Object.assign(messages[lang], config.ui[lang])
-    })
-  })
+      Object.assign(messages[lang], config.ui[lang]);
+    });
+  });
 
-  return messages
+  return messages;
 }
 
 
 export function getLocale(clientAcceptLanguage, messages) {
   try {
-    acceptLanguage.languages(Object.keys(messages))
+    acceptLanguage.languages(Object.keys(messages));
   } catch (error) {
-    throw new Error('Unable to get known languages. See following error for more information: ' + error)
+    throw new Error('Unable to get known languages. See following error for more information: ' + error);
   }
 
-  var locale = clientAcceptLanguage ? acceptLanguage.get(clientAcceptLanguage) : DEFAULT_LANGUAGE
+  var locale = clientAcceptLanguage ? acceptLanguage.get(clientAcceptLanguage) : DEFAULT_LANGUAGE;
   if (! messages[locale]) {
-    locale = DEFAULT_LANGUAGE
+    locale = DEFAULT_LANGUAGE;
   }
-  return locale
+  return locale;
 }
 
 export function getLocaleMessages(locale, messages) {
-  return messages[locale]
+  return messages[locale];
 }
