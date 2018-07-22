@@ -1,4 +1,4 @@
-aahDependencyTitle = "aah_base"
-enumVariableTitle = "statut_marital"
+aahDependencyTitle = 'aah_base'
+enumVariableTitle = 'statut_marital'
 enumVariableDefault = /celibataire/
-enumVariableDefinition = "Celibataire"
+enumVariableDefinition = 'Celibataire'
