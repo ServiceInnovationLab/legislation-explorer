@@ -19,7 +19,7 @@ function fetchJson(url, options) {
         }
         throw new Error(JSON.stringify({error: 'Unexpected return code ' + response.status}))
       })
-  )
+    )
 }
 
 

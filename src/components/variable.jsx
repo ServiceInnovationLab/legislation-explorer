@@ -144,18 +144,18 @@ const Variable = React.createClass({
               </thead>
               <tbody>
                 {
-                Object.keys(variable.possibleValues).map((keyword) => {
-                  return (
-                    <tr>
-                      <td className="list-entry">
-                        <samp>{keyword}</samp>
-                      </td>
-                      <td>
-                        <samp>{variable.possibleValues[keyword]}</samp>
-                      </td>
-                    </tr>
-                  )
-                })
+                  Object.keys(variable.possibleValues).map((keyword) => {
+                    return (
+                      <tr>
+                        <td className="list-entry">
+                          <samp>{keyword}</samp>
+                        </td>
+                        <td>
+                          <samp>{variable.possibleValues[keyword]}</samp>
+                        </td>
+                      </tr>
+                    )
+                  })
                 }
               </tbody>
             </table>
@@ -172,7 +172,7 @@ const Variable = React.createClass({
                   <a href={ reference } target="_blank" > { reference } </a>
                 </li>
               )}
-         </ul>)
+          </ul>)
         }
         {keys(variable.formulas).length == 0 &&
           <p>
@@ -186,7 +186,7 @@ const Variable = React.createClass({
             />
           </p>
         }
-    </div>
+      </div>
     )
   },
 
@@ -211,7 +211,7 @@ const Variable = React.createClass({
                 source={formulas[date].source}
                 variables={this.props.variables}
                 parameters={this.props.parameters}
-                />
+              />
             )
           })
         }
