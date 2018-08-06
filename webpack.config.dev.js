@@ -1,18 +1,18 @@
 // This is the webpack config to use during development.
 // It enables the hot module replacement, the source maps and inline CSS styles.
 
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import ErrorNotificationPlugin from 'webpack-error-notification'
-import path from 'path'
-import webpack from 'webpack'
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ErrorNotificationPlugin from 'webpack-error-notification';
+import path from 'path';
+import webpack from 'webpack';
 
-import writeAssets from './src/server/write-assets'
+import writeAssets from './src/server/write-assets';
 
 
-const assetsPath = path.resolve(__dirname, 'public')
+const assetsPath = path.resolve(__dirname, 'public');
 
-const WEBPACK_HOST = process.env.HOST || 'localhost'
-const WEBPACK_PORT = parseInt(process.env.PORT) + 1 || 2031
+const WEBPACK_HOST = process.env.HOST || 'localhost';
+const WEBPACK_PORT = parseInt(process.env.PORT) + 1 || 2031;
 
 
 module.exports = {
@@ -73,13 +73,13 @@ module.exports = {
     // print a webpack progress
     new webpack.ProgressPlugin((percentage) => {
       if (percentage === 1) {
-        process.stdout.write('Bundle is ready')
+        process.stdout.write('Bundle is ready');
       }
     }),
 
     new ErrorNotificationPlugin(process.platform === 'linux' && function(msg) {
       if (!this.lastBuildSucceeded) {
-        require('child_process').exec('notify-send --hint=int:transient:1 Webpack ' + msg)
+        require('child_process').exec('notify-send --hint=int:transient:1 Webpack ' + msg);
       }
     }),
 
@@ -103,6 +103,6 @@ module.exports = {
       {from: 'node_modules/swagger-ui/dist/swagger-ui.css', to: '.'},
     ]),
 
-    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
+    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))); },
   ],
-}
+};

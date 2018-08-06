@@ -1,44 +1,44 @@
-import PiwikReactRouter from 'piwik-react-router'
-import React from 'react'
-import {render} from 'react-dom'
-import {createHistory} from 'history'
-import {Router, useRouterHistory} from 'react-router'
+import PiwikReactRouter from 'piwik-react-router';
+import React from 'react';
+import {render} from 'react-dom';
+import {createHistory} from 'history';
+import {Router, useRouterHistory} from 'react-router';
 
-import {addLocaleData, IntlProvider} from 'react-intl'
+import {addLocaleData, IntlProvider} from 'react-intl';
 
-import config from './config'
-import routes from './routes'
+import config from './config';
+import routes from './routes';
 
-require('babel-polyfill')
+require('babel-polyfill');
 
 
 // Adapted from: https://github.com/ReactTraining/react-router/issues/394#issuecomment-230116115
 function hashLinkScroll() {
-  const { hash } = window.location
+  const { hash } = window.location;
   if (hash === '') {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   } else {
     window.requestAnimationFrame(() => {
-      const id = hash.replace('#', '')
-      const element = document.getElementById(id)
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView()
+        element.scrollIntoView();
       }
-    })
+    });
   }
 }
 
 export function renderApp() {
-  const appMountNode = document.getElementById('app-mount-node')
-  const initialState = window.__INITIAL_STATE__
-  const basename = process.env.BASENAME || '/'
-  let history = useRouterHistory(createHistory)({basename: basename})
+  const appMountNode = document.getElementById('app-mount-node');
+  const initialState = window.__INITIAL_STATE__;
+  const basename = process.env.BASENAME || '/';
+  let history = useRouterHistory(createHistory)({basename: basename});
 
   if (config.piwikConfig) {
-    history = PiwikReactRouter(config.piwikConfig).connectToHistory(history)
+    history = PiwikReactRouter(config.piwikConfig).connectToHistory(history);
   }
 
-  addLocaleData(require(`react-intl/locale-data/${initialState.locale}`))
+  addLocaleData(require(`react-intl/locale-data/${initialState.locale}`));
 
   render(
     <IntlProvider locale={initialState.locale} key={initialState.locale} messages={initialState.messages[initialState.locale]}>
@@ -50,8 +50,8 @@ export function renderApp() {
       />
     </IntlProvider>,
     appMountNode
-  )
+  );
 }
 
 
-renderApp()
+renderApp();

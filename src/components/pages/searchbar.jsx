@@ -1,8 +1,8 @@
-import { routerShape } from 'react-router'
-import React from 'react'
-import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
+import { routerShape } from 'react-router';
+import React from 'react';
+import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
 
-import { searchInputId } from './home'
+import { searchInputId } from './home';
 
 const SearchBarComponent = React.createClass({
   contextTypes: {
@@ -10,29 +10,29 @@ const SearchBarComponent = React.createClass({
   },
 
   getInitialState() {
-    return {inputValue: this.props.initialValue}
+    return {inputValue: this.props.initialValue};
   },
 
   handleInputChange(event) {
-    this.setState({inputValue: event.target.value})
-    this.searchInput.scrollIntoView()
+    this.setState({inputValue: event.target.value});
+    this.searchInput.scrollIntoView();
   },
 
   handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.context.router.push({
       pathname: '/',
       query: {q: this.state.inputValue},
       hash: '#search-input',
-    })
+    });
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({inputValue: nextProps.initialValue})
+    this.setState({inputValue: nextProps.initialValue});
   },
 
   render() {
-    const inputValue = this.state.inputValue
+    const inputValue = this.state.inputValue;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -52,13 +52,13 @@ const SearchBarComponent = React.createClass({
           </div>
         </form>
       </div>
-    )
+    );
   },
-})
+});
 
 SearchBarComponent.propTypes = {
   intl: intlShape.isRequired
-}
+};
 
 
-export default injectIntl(SearchBarComponent)
+export default injectIntl(SearchBarComponent);
