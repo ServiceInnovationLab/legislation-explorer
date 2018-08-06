@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { parameterShape, variableShape } from '../openfisca-proptypes'
-import { Link } from 'react-router'
-import { FormattedMessage, FormattedDate } from 'react-intl'
-import { flatten, pipe, map, is } from 'ramda'
-import Highlight from 'react-highlight'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { parameterShape, variableShape } from '../openfisca-proptypes';
+import { Link } from 'react-router';
+import { FormattedMessage, FormattedDate } from 'react-intl';
+import { flatten, pipe, map, is } from 'ramda';
+import Highlight from 'react-highlight';
 
 const Formula = React.createClass({
 
@@ -18,7 +18,7 @@ const Formula = React.createClass({
   },
 
   render() {
-    const { startDate, stopDate, content, source } = this.props
+    const { startDate, stopDate, content, source } = this.props;
 
     return (
       <div>
@@ -37,96 +37,96 @@ const Formula = React.createClass({
           <a href={source} rel="noopener" target="_blank"><FormattedMessage id="editThisFormula"/></a>
         </p>
       </div>
-    )
+    );
   },
   link(variable) {
     return <Link key={ variable + Math.random() } to={ variable }
-      data-toggle="popover" title={ this.props.variables[variable].description }>{ variable }</Link>
+      data-toggle="popover" title={ this.props.variables[variable].description }>{ variable }</Link>;
   },
   linkParam(parameter, linkText) {
     return <Link key={parameter + Math.random()} to={parameter}
-      data-toggle="popover" title={this.props.parameters[parameter].description}>{ linkText }</Link>
+      data-toggle="popover" title={this.props.parameters[parameter].description}>{ linkText }</Link>;
   },
   isVariable(substring) {
     // Ignore every text that isn't a single word like a variable must be:
-    return (! substring.includes(' ') && this.props.variables[substring])
+    return (! substring.includes(' ') && this.props.variables[substring]);
   },
   splitAndLinkVariables(text, separator) {
     // Only split strings, as trying to split JSX Links would raise an error
     if (! is(String, text)) {
-      return text
+      return text;
     }
-    const splits = text.split(separator)
+    const splits = text.split(separator);
     return splits.map((substring, index) => {
       if (this.isVariable(substring)) {
-        substring = [this.link(substring), separator]  // Concatenate JSX with a string (+ doesn't work).
+        substring = [this.link(substring), separator];  // Concatenate JSX with a string (+ doesn't work).
       } else {
-        substring = index < splits.length - 1 ? substring + separator : substring
+        substring = index < splits.length - 1 ? substring + separator : substring;
       }
-      return substring
-    })
+      return substring;
+    });
   },
   splitAndLinkParams(text) {
-    const recordedParamNodes = []
+    const recordedParamNodes = [];
     const recordParamNode = (nodeVariableName, path) => {
       // Matches "P_2 = P.af" or "P.af"
-      const splitRegex = new RegExp(`((?:[\\S]*[\\s]*[=][\\s]*)?${nodeVariableName}\\.[0-9a-zA-Z\\_\\.]*)`)
-      const matchRegex = new RegExp(`(?:([\\S]*)([\\s]*[=][\\s]*))?(${nodeVariableName}\\.)([0-9a-zA-Z\\_\\.]*)`)
+      const splitRegex = new RegExp(`((?:[\\S]*[\\s]*[=][\\s]*)?${nodeVariableName}\\.[0-9a-zA-Z\\_\\.]*)`);
+      const matchRegex = new RegExp(`(?:([\\S]*)([\\s]*[=][\\s]*))?(${nodeVariableName}\\.)([0-9a-zA-Z\\_\\.]*)`);
       recordedParamNodes.push({
         'nodeVariableName': nodeVariableName,
         'parameterPath': path,
         'splitRegex': splitRegex,
         'matchRegex': matchRegex
-      })
-    }
+      });
+    };
     // Matches "P = parameters(period).af"
-    const splits = text.split(/([\S]*[\s]*[=][\s]* parameters\([\S]*\)\.?[\S]*)/)
+    const splits = text.split(/([\S]*[\s]*[=][\s]* parameters\([\S]*\)\.?[\S]*)/);
     // We go through each substring and find parameters(x=parameter(x).x.x) and check if they are a node or an actual parameter.
     // If it's a node, it records the node and the variable associated. Else, it returns the link.
     return splits.map((substring, index) => {
       // This checks if the split actually happened
       if (index % 2 == 1) {
-        const parameterCall = substring.match(/([\S]*)([\s]*[=][\s]*parameters\([\S]*\)\.?)([\S]*)/)
-        const parameterPath = parameterCall[3]
-        const nodeVariableName = parameterCall[1]
+        const parameterCall = substring.match(/([\S]*)([\s]*[=][\s]*parameters\([\S]*\)\.?)([\S]*)/);
+        const parameterPath = parameterCall[3];
+        const nodeVariableName = parameterCall[1];
         if (this.props.parameters[parameterPath]) {
-          return [nodeVariableName, parameterCall[2], this.linkParam(parameterPath, parameterPath)]  // Concatenate JSX with a string (+ doesn't work).
+          return [nodeVariableName, parameterCall[2], this.linkParam(parameterPath, parameterPath)];  // Concatenate JSX with a string (+ doesn't work).
         } else {
-          recordParamNode(nodeVariableName,parameterPath)
-          return [substring]
+          recordParamNode(nodeVariableName,parameterPath);
+          return [substring];
         }
       } else {
-        let substrings = [substring]
+        let substrings = [substring];
         for (let i = 0; i < recordedParamNodes.length; i++) {
-          const element = recordedParamNodes[i]
+          const element = recordedParamNodes[i];
           substrings = substrings.map(substring2 => {
             return ! is(String, substring2)
               ? substring2
               : substring2
                 .split(element.splitRegex)
                 .map(substring3 => {
-                  const match = substring3.match(element.matchRegex)
+                  const match = substring3.match(element.matchRegex);
                   if ( ! match) {
-                    return substring3
+                    return substring3;
                   } else {
-                    const parameterPath = match[4]
-                    const nodePath = element.parameterPath ? `${element.parameterPath}.${parameterPath}` : parameterPath
+                    const parameterPath = match[4];
+                    const nodePath = element.parameterPath ? `${element.parameterPath}.${parameterPath}` : parameterPath;
                     if (this.props.parameters[nodePath]) {
-                      const linkThisParam = this.linkParam(nodePath, parameterPath)
-                      return [match[1],match[2],match[3], linkThisParam]
+                      const linkThisParam = this.linkParam(nodePath, parameterPath);
+                      return [match[1],match[2],match[3], linkThisParam];
                     } else {
-                      const nodeVariableName = match[1]
-                      recordParamNode(nodeVariableName,nodePath)
-                      return [substring3]
+                      const nodeVariableName = match[1];
+                      recordParamNode(nodeVariableName,nodePath);
+                      return [substring3];
                     }
                   }
-                })
-          })
-          substrings = flatten(substrings)
+                });
+          });
+          substrings = flatten(substrings);
         }
-        return substrings
+        return substrings;
       }
-    })
+    });
   },
   // Change every OpenFisca parameter and variable in the formula by a link to the variable page:
   renderLinkedFormula(formula) {
@@ -135,15 +135,15 @@ const Formula = React.createClass({
       this.splitAndLinkParams,
       flatten,
       map((substring) => {
-        return this.splitAndLinkVariables(substring, '"')
+        return this.splitAndLinkVariables(substring, '"');
       }),
       flatten,
       map((substring) => {
-        return this.splitAndLinkVariables(substring, "'")
+        return this.splitAndLinkVariables(substring, "'");
       }),
       flatten
-    )(formula)
+    )(formula);
   },
-})
+});
 
-export default Formula
+export default Formula;

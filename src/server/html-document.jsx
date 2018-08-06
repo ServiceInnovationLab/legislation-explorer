@@ -1,10 +1,10 @@
-import DocumentTitle from 'react-document-title'
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import DocumentTitle from 'react-document-title';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class HtmlDocument extends Component {
   render() {
-    const {appHtml, cssUrls, appInitialState, jsUrls} = this.props
+    const {appHtml, cssUrls, appInitialState, jsUrls} = this.props;
     return (
       <html>
         <head>
@@ -25,7 +25,7 @@ export default class HtmlDocument extends Component {
           {jsUrls && jsUrls.map((src, idx) => <script key={idx} src={src} />)}
         </body>
       </html>
-    )
+    );
   }
 }
 
@@ -34,4 +34,4 @@ HtmlDocument.propTypes = {
   appInitialState: PropTypes.object,
   cssUrls: PropTypes.arrayOf(PropTypes.string),
   jsUrls: PropTypes.arrayOf(PropTypes.string),
-}
+};

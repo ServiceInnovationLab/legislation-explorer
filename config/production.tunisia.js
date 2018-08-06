@@ -18,7 +18,7 @@ const HOST = process.env.HOST || 'api.openfisca.tn',
     fr: {
       countryName: 'Tunisie',
     }
-  }
+  };
 
 
 export default {
@@ -29,4 +29,4 @@ export default {
   ui,
   useCommitReferenceFromApi,
   websiteUrl
-}
+};

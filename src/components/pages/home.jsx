@@ -1,15 +1,15 @@
-import {isEmpty} from 'ramda'
-import React from 'react'
-import PropTypes from 'prop-types'
-import {Link, locationShape, routerShape} from 'react-router'
-import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
-import DocumentTitle from 'react-document-title'
+import {isEmpty} from 'ramda';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Link, locationShape, routerShape} from 'react-router';
+import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
+import DocumentTitle from 'react-document-title';
 
-import { parameterShape, variableShape } from '../../openfisca-proptypes'
-import List from '../list'
-import config from '../../config'
-import SearchBarComponent from './searchbar'
-export const searchInputId = 'search-input'
+import { parameterShape, variableShape } from '../../openfisca-proptypes';
+import List from '../list';
+import config from '../../config';
+import SearchBarComponent from './searchbar';
+export const searchInputId = 'search-input';
 
 const HomePage = React.createClass({
   contextTypes: {
@@ -27,38 +27,38 @@ const HomePage = React.createClass({
     variables: PropTypes.objectOf(variableShape).isRequired,
   },
   componentDidMount() {
-    this._isMounted = true
-    const {router} = this.context
-    this.unregisterRouterListen = router.listen(this.locationHasChanged)
+    this._isMounted = true;
+    const {router} = this.context;
+    this.unregisterRouterListen = router.listen(this.locationHasChanged);
   },
   componentWillUnmount() {
-    this._isMounted = false
-    this.unregisterRouterListen()
+    this._isMounted = false;
+    this.unregisterRouterListen();
   },
   getInitialState() {
-    return {inputValue: ''}
+    return {inputValue: ''};
   },
 
   locationHasChanged(location) {
     if (this._isMounted) {
-      let searchQuery = ''
+      let searchQuery = '';
       if (location.query.q) {
-        searchQuery = location.query.q
+        searchQuery = location.query.q;
       }
 
       if (searchQuery) {
-        this.context.setSearchQuery(searchQuery)
+        this.context.setSearchQuery(searchQuery);
       }
-      this.setState({inputValue: searchQuery})
-      this.setState({is404: location.query.is404})
+      this.setState({inputValue: searchQuery});
+      this.setState({is404: location.query.is404});
     }
   },
 
   render() {
-    const inputValue = this.state.inputValue
-    const is404 = this.state.is404
-    const {searchQuery, searchResults} = this.context
-    const changelogURL = `https://www.github.com/${config.gitHubProject}/blob/master/CHANGELOG.md`
+    const inputValue = this.state.inputValue;
+    const is404 = this.state.is404;
+    const {searchQuery, searchResults} = this.context;
+    const changelogURL = `https://www.github.com/${config.gitHubProject}/blob/master/CHANGELOG.md`;
     return (
       <DocumentTitle title={(is404 ? this.props.intl.formatMessage({ id: 'elementNotFound' }) + ' — ' : '') + this.props.intl.formatMessage({ id: 'appName' })}>
         <div>
@@ -100,9 +100,9 @@ const HomePage = React.createClass({
           </section>
         </div>
       </DocumentTitle>
-    )
+    );
   },
-})
+});
 
 const SearchResults = React.createClass({
   propTypes: {
@@ -112,14 +112,14 @@ const SearchResults = React.createClass({
   shouldComponentUpdate(nextProps) {
     // Optimization: re-render this component only if `searchQuery` changed.
     // If `searchQuery` is the same than on previous rendering, it implies that `items` is the same too.
-    return nextProps.searchQuery !== this.props.searchQuery
+    return nextProps.searchQuery !== this.props.searchQuery;
   },
   render() {
-    const {items} = this.props
+    const {items} = this.props;
     return (
       <List items={items} type="unstyled">
         {item => {
-          const {description, itemType, name} = item
+          const {description, itemType, name} = item;
           return (
             <Link key={`${name}-${itemType}`} to={`/${name}`}>
               <article style={{margin: '3em 0'}}>
@@ -127,12 +127,12 @@ const SearchResults = React.createClass({
                 {description && <p>{description}</p>}
               </article>
             </Link>
-          )
+          );
         }}
       </List>
-    )
+    );
   }
-})
+});
 
 
-export default injectIntl(HomePage)
+export default injectIntl(HomePage);
