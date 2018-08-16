@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link, locationShape, routerShape } from 'react-router'
-import { FormattedMessage } from 'react-intl'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, locationShape, routerShape } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
-import { parameterShape, variableShape } from '../../openfisca-proptypes'
-import Parameter from '../parameter'
-import Variable from '../variable'
-import { searchInputId } from './home'
-import { fetchParameter, fetchVariable } from '../../webservices'
+import { parameterShape, variableShape } from '../../openfisca-proptypes';
+import Parameter from '../parameter';
+import Variable from '../variable';
+import { searchInputId } from './home';
+import { fetchParameter, fetchVariable } from '../../webservices';
 
 
 const ParameterOrVariablePage = React.createClass({
@@ -25,51 +25,51 @@ const ParameterOrVariablePage = React.createClass({
     variables: PropTypes.objectOf(variableShape).isRequired,
   },
   getInitialState() {
-    return {variable: null, parameter: null, waitingForResponse: true}
+    return {variable: null, parameter: null, waitingForResponse: true};
   },
   fetchPageContent(name) {
     if (this.props.variables[name]) {
       fetchVariable(name).then(
         variable => {
-          this.setState({variable: variable.data, waitingForResponse: false})
+          this.setState({variable: variable.data, waitingForResponse: false});
         }
-      )
+      );
     } else if (this.props.parameters[name]) {
       fetchParameter(name).then(
         parameter => {
-          this.setState({parameter: parameter.data, waitingForResponse: false})
+          this.setState({parameter: parameter.data, waitingForResponse: false});
         }
-      )
+      );
     } else {
-      this.setState({waitingForResponse: false})
-      this.handleNotFound()
+      this.setState({waitingForResponse: false});
+      this.handleNotFound();
     }
   },
   componentWillReceiveProps(nextProps) {
-    this.fetchPageContent(nextProps.params.name)
+    this.fetchPageContent(nextProps.params.name);
   },
   componentDidMount() {
-    this.fetchPageContent(this.props.params.name)
+    this.fetchPageContent(this.props.params.name);
   },
   handleNotFound() {
-    const name = this.props.params.name
+    const name = this.props.params.name;
     return this.context.router.push({
       pathname: '/',
       query: {q: name, is404: true},
       hash: '#not-found',
-    })
+    });
   },
 
   render() {
-    const { searchQuery, searchResults } = this.context
-    const {countryPackageName, countryPackageVersion, parameters, variables} = this.props
-    const {parameter, variable} = this.state
+    const { searchQuery, searchResults } = this.context;
+    const {countryPackageName, countryPackageVersion, parameters, variables} = this.props;
+    const {parameter, variable} = this.state;
     const goBackLocation = {
       pathname: '/',
       query: {q: searchQuery},
       hash: `#${searchInputId}`,
-    }
-    const otherResultsCount = searchResults.length - 1
+    };
+    const otherResultsCount = searchResults.length - 1;
 
     if (this.state.waitingForResponse) {
       return (
@@ -77,7 +77,7 @@ const ParameterOrVariablePage = React.createClass({
           <span className="glyphicon glyphicon-refresh"></span>
           <FormattedMessage id="loading"/>
         </div>
-      )
+      );
     }
 
     return (
@@ -108,9 +108,9 @@ const ParameterOrVariablePage = React.createClass({
           )
         }
       </div>
-    )
+    );
   },
-})
+});
 
 
-export default ParameterOrVariablePage
+export default ParameterOrVariablePage;

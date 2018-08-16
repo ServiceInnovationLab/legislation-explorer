@@ -1,7 +1,7 @@
-import React from 'react'
-import { FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl'
+import React from 'react';
+import { FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl';
 
-import { parameterShape } from '../openfisca-proptypes'
+import { parameterShape } from '../openfisca-proptypes';
 
 
 const Scale = React.createClass({
@@ -9,7 +9,7 @@ const Scale = React.createClass({
     parameter: parameterShape.isRequired,
   },
   render() {
-    const {brackets} = this.props.parameter
+    const {brackets} = this.props.parameter;
     return (
       <table className="table table-bordered table-hover table-striped">
         <thead>
@@ -22,15 +22,15 @@ const Scale = React.createClass({
         <tbody>
           {
             Object.keys(brackets).sort().reverse().map((startDate, bracketIndex) => {
-              const bracket = brackets[startDate]
-              const thresholds = Object.keys(bracket).sort((a,b) => Number(a) - Number(b))
+              const bracket = brackets[startDate];
+              const thresholds = Object.keys(bracket).sort((a,b) => Number(a) - Number(b));
 
               return thresholds.map((threshold, thresholdIndex) => {
-                const isFirstBracket = thresholdIndex === 0
-                const hasNextThreshold = thresholds[thresholdIndex + 1]
-                const nextThreshold = hasNextThreshold && Number(hasNextThreshold)  // '0' is truthy while Number('0') is falsy
-                const marginalRate = bracket[threshold]
-                threshold = parseFloat(threshold)
+                const isFirstBracket = thresholdIndex === 0;
+                const hasNextThreshold = thresholds[thresholdIndex + 1];
+                const nextThreshold = hasNextThreshold && Number(hasNextThreshold);  // '0' is truthy while Number('0') is falsy
+                const marginalRate = bracket[threshold];
+                threshold = parseFloat(threshold);
 
                 return (
                   <tr
@@ -60,15 +60,15 @@ const Scale = React.createClass({
                       <samp><FormattedNumber value={marginalRate} style="percent" maximumFractionDigits={3}/></samp>
                     </td>
                   </tr>
-                )
-              })
+                );
+              });
             })
           }
         </tbody>
       </table>
-    )
+    );
   }
-})
+});
 
 
-export default Scale
+export default Scale;

@@ -1,13 +1,13 @@
-import DocumentTitle from 'react-document-title'
-import { FormattedMessage, FormattedDate, FormattedNumber, injectIntl, intlShape } from 'react-intl'
-import React from 'react'
-import PropTypes from 'prop-types'
-import { keys } from 'ramda'
+import DocumentTitle from 'react-document-title';
+import { FormattedMessage, FormattedDate, FormattedNumber, injectIntl, intlShape } from 'react-intl';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { keys } from 'ramda';
 
-import config from '../config'
-import { parameterShape, variableShape } from '../openfisca-proptypes'
-import Formula from './formula'
-import getDayBefore from '../periods'
+import config from '../config';
+import { parameterShape, variableShape } from '../openfisca-proptypes';
+import Formula from './formula';
+import getDayBefore from '../periods';
 
 const Variable = React.createClass({
   propTypes: {
@@ -20,7 +20,7 @@ const Variable = React.createClass({
   },
 
   render() {
-    const { variable } = this.props
+    const { variable } = this.props;
     return (
       <DocumentTitle title={variable.id + ' — ' + this.props.intl.formatMessage({ id: 'appName' })}>
         <section>
@@ -41,7 +41,7 @@ const Variable = React.createClass({
           </p>
         </section>
       </DocumentTitle>
-    )
+    );
   },
 
   renderVariableMetadata(variable) {
@@ -50,31 +50,31 @@ const Variable = React.createClass({
       foyer_fiscal: 'foyer fiscal',
       individu: 'individu',
       menage: 'ménage',
-    }
+    };
 
     const definitionPeriodMessage = {
       YEAR: <FormattedMessage id="aYear"/>,
       MONTH: <FormattedMessage id="aMonth"/>,
       ETERNITY: <FormattedMessage id="forEternity"/>
-    }
+    };
 
     const valueTypeMessage = {
       Int: <FormattedMessage id="anInteger"/>,
       Float: <FormattedMessage id="aFloat"/>,
       Date: <FormattedMessage id="aDate"/>,
       String: <FormattedMessage id="aString"/>,
-    }
+    };
 
     function formatDefaultValue(variable) {
       switch (variable.valueType) {
       case 'Date':
-        return <FormattedDate value={ variable.defaultValue } year="numeric" month="2-digit" day="2-digit" />
+        return <FormattedDate value={ variable.defaultValue } year="numeric" month="2-digit" day="2-digit" />;
       case 'Float':
-        return <FormattedNumber value={variable.defaultValue} />
+        return <FormattedNumber value={variable.defaultValue} />;
       case 'String':
-        return `"${ variable.defaultValue }"`
+        return `"${ variable.defaultValue }"`;
       default:
-        return String(variable.defaultValue)
+        return String(variable.defaultValue);
       }
     }
 
@@ -154,7 +154,7 @@ const Variable = React.createClass({
                         <samp>{variable.possibleValues[keyword]}</samp>
                       </td>
                     </tr>
-                  )
+                  );
                 })
                 }
               </tbody>
@@ -187,12 +187,12 @@ const Variable = React.createClass({
           </p>
         }
     </div>
-    )
+    );
   },
 
   renderFormulas(formulas) {
-    const startDates = keys(formulas).sort().reverse()
-    const severalFormulas = (startDates.length > 2) || (startDates.length == 2) && formulas[startDates[0]]
+    const startDates = keys(formulas).sort().reverse();
+    const severalFormulas = (startDates.length > 2) || (startDates.length == 2) && formulas[startDates[0]];
     return (
       <div>
         <h2>
@@ -200,8 +200,8 @@ const Variable = React.createClass({
         </h2>
         { startDates.map(
           (date, dateIndex) => {
-            const startDate = (date != '0001-01-01') && date
-            const stopDate = startDates[dateIndex - 1] && getDayBefore(startDates[dateIndex - 1])
+            const startDate = (date != '0001-01-01') && date;
+            const stopDate = startDates[dateIndex - 1] && getDayBefore(startDates[dateIndex - 1]);
             return formulas[date] && (
               <Formula
                 key={startDate}
@@ -212,12 +212,12 @@ const Variable = React.createClass({
                 variables={this.props.variables}
                 parameters={this.props.parameters}
                 />
-            )
+            );
           })
         }
       </div>
-    )
+    );
   },
-})
+});
 
-export default injectIntl(Variable)
+export default injectIntl(Variable);
