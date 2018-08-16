@@ -1,45 +1,45 @@
 // Express middleware to render the app server-side and expose its state
 // to the client
 
-import React from 'react'
-import {renderToString, renderToStaticMarkup} from 'react-dom/server'
-import {match, RouterContext} from 'react-router'
-import {IntlProvider} from 'react-intl'
+import React from 'react';
+import {renderToString, renderToStaticMarkup} from 'react-dom/server';
+import {match, RouterContext} from 'react-router';
+import {IntlProvider} from 'react-intl';
 
-import {getLocale, getLocaleMessages} from './lang'
-import routes from '../routes'
-import HtmlDocument from './html-document'
+import {getLocale, getLocaleMessages} from './lang';
+import routes from '../routes';
+import HtmlDocument from './html-document';
 
 
 export default function handleRender(state) {
   return function (req, res) {
-    state.locale = getLocale(req.headers['accept-language'], state.messages)
+    state.locale = getLocale(req.headers['accept-language'], state.messages);
 
     match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
       if (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error.message);
       } else if (redirectLocation) {
-        res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+        res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
-        res.send(renderHtmlDocument(renderProps, state))
+        res.send(renderHtmlDocument(renderProps, state));
       } else {
-        res.status(404).send('Not found')
+        res.status(404).send('Not found');
       }
-    })
-  }
+    });
+  };
 }
 
 function loadWebpackAssets() {
-  const WEBPACK_ASSETS_FILE_PATH = '../../webpack-assets.json'
-  let webpackAssets = require(WEBPACK_ASSETS_FILE_PATH)
+  const WEBPACK_ASSETS_FILE_PATH = '../../webpack-assets.json';
+  let webpackAssets = require(WEBPACK_ASSETS_FILE_PATH);
 
   if (process.env.NODE_ENV === 'development') {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
-    delete require.cache[require.resolve(WEBPACK_ASSETS_FILE_PATH)]
+    delete require.cache[require.resolve(WEBPACK_ASSETS_FILE_PATH)];
   }
 
-  return webpackAssets
+  return webpackAssets;
 }
 
 
@@ -51,28 +51,28 @@ function renderHtmlDocument(renderProps, state) {
         createElement={(Component, props) => <Component {...props} {...state} />}
       />
     </IntlProvider>
-  )
-  const webpackAssets = loadWebpackAssets()
-  const pathname = process.env.PATHNAME || ''
+  );
+  const webpackAssets = loadWebpackAssets();
+  const pathname = process.env.PATHNAME || '';
 
   // Add external CSS copied to the public directory by CopyWebpackPlugin in webpack config.
   const bootstrapCss = process.env.NODE_ENV === 'production'
     ? `${pathname}/bootstrap/css/bootstrap.min.css`
-    : `${pathname}/bootstrap/css/bootstrap.css`
+    : `${pathname}/bootstrap/css/bootstrap.css`;
 
   let externalCss = [
     bootstrapCss,
     `${pathname}/swagger-ui.css`,
     `${pathname}/github-gist.css`,
     `${pathname}/style.css`
-  ]
+  ];
 
   if (process.env.NODE_ENV === 'development') {
-    const webpackDevConfig = require('../../webpack.config.dev')
+    const webpackDevConfig = require('../../webpack.config.dev');
 
-    externalCss = externalCss.map(file => `${webpackDevConfig.output.publicPath}${file}`)
+    externalCss = externalCss.map(file => `${webpackDevConfig.output.publicPath}${file}`);
   }
-  const css = webpackAssets.main.css.concat(externalCss)
+  const css = webpackAssets.main.css.concat(externalCss);
   const html = renderToStaticMarkup(
     <HtmlDocument
       appHtml={appHtml}
@@ -80,7 +80,7 @@ function renderHtmlDocument(renderProps, state) {
       cssUrls={css}
       jsUrls={webpackAssets.main.js}
     />
-  )
-  const doctype = '<!DOCTYPE html>'
-  return doctype + html
+  );
+  const doctype = '<!DOCTYPE html>';
+  return doctype + html;
 }
