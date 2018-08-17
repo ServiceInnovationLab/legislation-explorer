@@ -35,7 +35,7 @@ const Variable = React.createClass({
           </a>
           { keys(variable.formulas).length != 0 && this.renderFormulas(variable.formulas) }
           <p>
-            <a href={`${ config.apiBaseUrl }/variable/${ variable.id }`} rel="external noopener" target="_blank">
+            <a href={`${config.apiBaseUrl}/variable/${variable.id}`} rel="external noopener" target="_blank">
               <FormattedMessage id="rawJSONData"/>
             </a>
           </p>
@@ -72,7 +72,7 @@ const Variable = React.createClass({
       case 'Float':
         return <FormattedNumber value={variable.defaultValue} />
       case 'String':
-        return `"${ variable.defaultValue }"`
+        return `"${variable.defaultValue}"`
       default:
         return String(variable.defaultValue)
       }

@@ -49,17 +49,17 @@ const Formula = React.createClass({
   },
   isVariable(substring) {
     // Ignore every text that isn't a single word like a variable must be:
-    return (! substring.includes(' ') && this.props.variables[substring])
+    return (!substring.includes(' ') && this.props.variables[substring])
   },
   splitAndLinkVariables(text, separator) {
     // Only split strings, as trying to split JSX Links would raise an error
-    if (! is(String, text)) {
+    if (!is(String, text)) {
       return text
     }
     const splits = text.split(separator)
     return splits.map((substring, index) => {
       if (this.isVariable(substring)) {
-        substring = [this.link(substring), separator]  // Concatenate JSX with a string (+ doesn't work).
+        substring = [this.link(substring), separator] // Concatenate JSX with a string (+ doesn't work).
       } else {
         substring = index < splits.length - 1 ? substring + separator : substring
       }
@@ -90,9 +90,9 @@ const Formula = React.createClass({
         const parameterPath = parameterCall[3]
         const nodeVariableName = parameterCall[1]
         if (this.props.parameters[parameterPath]) {
-          return [nodeVariableName, parameterCall[2], this.linkParam(parameterPath, parameterPath)]  // Concatenate JSX with a string (+ doesn't work).
+          return [nodeVariableName, parameterCall[2], this.linkParam(parameterPath, parameterPath)] // Concatenate JSX with a string (+ doesn't work).
         } else {
-          recordParamNode(nodeVariableName,parameterPath)
+          recordParamNode(nodeVariableName, parameterPath)
           return [substring]
         }
       } else {
@@ -100,23 +100,23 @@ const Formula = React.createClass({
         for (let i = 0; i < recordedParamNodes.length; i++) {
           const element = recordedParamNodes[i]
           substrings = substrings.map(substring2 => {
-            return ! is(String, substring2)
+            return !is(String, substring2)
               ? substring2
               : substring2
                 .split(element.splitRegex)
                 .map(substring3 => {
                   const match = substring3.match(element.matchRegex)
-                  if ( ! match) {
+                  if (!match) {
                     return substring3
                   } else {
                     const parameterPath = match[4]
                     const nodePath = element.parameterPath ? `${element.parameterPath}.${parameterPath}` : parameterPath
                     if (this.props.parameters[nodePath]) {
                       const linkThisParam = this.linkParam(nodePath, parameterPath)
-                      return [match[1],match[2],match[3], linkThisParam]
+                      return [match[1], match[2], match[3], linkThisParam]
                     } else {
                       const nodeVariableName = match[1]
-                      recordParamNode(nodeVariableName,nodePath)
+                      recordParamNode(nodeVariableName, nodePath)
                       return [substring3]
                     }
                   }
