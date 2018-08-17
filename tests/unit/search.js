@@ -1,7 +1,7 @@
-import {addNormalizedDescription, findParametersAndVariables} from '../../src/search'
-import {equals} from "ramda"
-import assert from "assert"
-import should from "should"
+import {addNormalizedDescription, findParametersAndVariables} from '../../src/search';
+import {equals} from "ramda";
+import assert from "assert";
+import should from "should";
 
 const parameters = addNormalizedDescription({
     'aah': {description: 'Allocation adulte handicapé'},
@@ -37,7 +37,7 @@ describe('Searching several words', function() {
         .map(item => item.name);
     it('should only return variables that contain all query words', function() {
         results.should.containDeep(['salaire_de_base', 'rsa_base_ressource', 'cotisation']);
-        results.should.have.size(3)
+        results.should.have.size(3);
     });
 
     it('should prioritize matches in name over matches in description', function() {
