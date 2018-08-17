@@ -23,12 +23,12 @@ const Scale = React.createClass({
           {
             Object.keys(brackets).sort().reverse().map((startDate, bracketIndex) => {
               const bracket = brackets[startDate]
-              const thresholds = Object.keys(bracket).sort((a,b) => Number(a) - Number(b))
+              const thresholds = Object.keys(bracket).sort((a, b) => Number(a) - Number(b))
 
               return thresholds.map((threshold, thresholdIndex) => {
                 const isFirstBracket = thresholdIndex === 0
                 const hasNextThreshold = thresholds[thresholdIndex + 1]
-                const nextThreshold = hasNextThreshold && Number(hasNextThreshold)  // '0' is truthy while Number('0') is falsy
+                const nextThreshold = hasNextThreshold && Number(hasNextThreshold) // '0' is truthy while Number('0') is falsy
                 const marginalRate = bracket[threshold]
                 threshold = parseFloat(threshold)
 

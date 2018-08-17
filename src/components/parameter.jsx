@@ -17,8 +17,8 @@ const Parameter = React.createClass({
   },
   render() {
     const {parameter} = this.props
-    const isScale = (! parameter.values)
-    //Add word break opportunities before dots for long parameter id
+    const isScale = (!parameter.values)
+    // Add word break opportunities before dots for long parameter id
     const multilineId = parameter.id.replace(/\./g, '<wbr>.')
 
     return (

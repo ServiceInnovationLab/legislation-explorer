@@ -13,7 +13,7 @@ if (process.env.MATOMO_CONFIG) {
   config.matomo = {
     url: process.env.MATOMO_URL,
     siteId: process.env.MATOMO_SITE_ID,
-    trackErrors: true,  // if there is a Matomo tracker, always send Legislation Explorer errors by default; if you want to override that behaviour, use the `MATOMO_CONFIG` option.
+    trackErrors: true, // if there is a Matomo tracker, always send Legislation Explorer errors by default; if you want to override that behaviour, use the `MATOMO_CONFIG` option.
   }
 }
 
