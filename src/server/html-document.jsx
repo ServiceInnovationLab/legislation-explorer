@@ -1,10 +1,10 @@
 import DocumentTitle from 'react-document-title'
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 export default class HtmlDocument extends Component {
   render() {
-    const {appHtml, cssUrls, appInitialState, jsUrls} = this.props
+    const { appHtml, cssUrls, appInitialState, jsUrls } = this.props
     return (
       <html>
         <head>
@@ -14,11 +14,11 @@ export default class HtmlDocument extends Component {
           {cssUrls && cssUrls.map((href, key) => <link href={href} key={key} rel="stylesheet" type="text/css" />)}
         </head>
         <body>
-          <div dangerouslySetInnerHTML={{__html: appHtml}} id="app-mount-node" />
+          <div dangerouslySetInnerHTML={{ __html: appHtml }} id="app-mount-node" />
           {
             appInitialState && (
               <script
-                dangerouslySetInnerHTML={{__html: `window.__INITIAL_STATE__ = ${JSON.stringify(appInitialState)}`}}
+                dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__ = ${JSON.stringify(appInitialState)}` }}
               />
             )
           }

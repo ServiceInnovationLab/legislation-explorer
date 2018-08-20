@@ -3,7 +3,7 @@ import config from '../config'
 import acceptLanguage from 'accept-language'
 
 import path from 'path'
-import {readdir} from 'fs'
+import { readdir } from 'fs'
 
 
 const DEFAULT_LANGUAGE = 'en'
@@ -38,7 +38,7 @@ export function getLocale(clientAcceptLanguage, messages) {
   }
 
   var locale = clientAcceptLanguage ? acceptLanguage.get(clientAcceptLanguage) : DEFAULT_LANGUAGE
-  if (! messages[locale]) {
+  if (!messages[locale]) {
     locale = DEFAULT_LANGUAGE
   }
   return locale

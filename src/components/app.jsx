@@ -1,11 +1,11 @@
 import DocumentTitle from 'react-document-title'
 import React from 'react'
 import PropTypes from 'prop-types'
-import {locationShape, Link} from 'react-router'
-import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
+import { locationShape, Link } from 'react-router'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import { parameterShape, variableShape } from '../openfisca-proptypes'
-import {findParametersAndVariables} from '../search'
+import { findParametersAndVariables } from '../search'
 
 const App = React.createClass({
   childContextTypes: {
@@ -22,7 +22,7 @@ const App = React.createClass({
     variables: PropTypes.objectOf(variableShape).isRequired,
   },
   getChildContext() {
-    const {parameters, variables} = this.props
+    const { parameters, variables } = this.props
     return {
       searchQuery: this.state.searchQuery,
       searchResults: this.state.searchResults,
@@ -35,7 +35,7 @@ const App = React.createClass({
     }
   },
   getInitialState() {
-    const {location, parameters, variables} = this.props
+    const { location, parameters, variables } = this.props
     const searchQuery = location.query.q || ''
     return {
       searchQuery,
@@ -46,7 +46,7 @@ const App = React.createClass({
     return this.props.location.pathname == route
   },
   render() {
-    const {countryPackageName, countryPackageVersion, parameters, variables} = this.props
+    const { countryPackageName, countryPackageVersion, parameters, variables } = this.props
     return (
       <DocumentTitle title={this.props.intl.formatMessage({ id: 'appName' })}>
         <div className="container">

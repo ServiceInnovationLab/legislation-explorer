@@ -1,8 +1,8 @@
-import {isEmpty} from 'ramda'
+import { isEmpty } from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link, locationShape, routerShape} from 'react-router'
-import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
+import { Link, locationShape, routerShape } from 'react-router'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import DocumentTitle from 'react-document-title'
 
 import { parameterShape, variableShape } from '../../openfisca-proptypes'
@@ -28,7 +28,7 @@ const HomePage = React.createClass({
   },
   componentDidMount() {
     this._isMounted = true
-    const {router} = this.context
+    const { router } = this.context
     this.unregisterRouterListen = router.listen(this.locationHasChanged)
   },
   componentWillUnmount() {
@@ -36,7 +36,7 @@ const HomePage = React.createClass({
     this.unregisterRouterListen()
   },
   getInitialState() {
-    return {inputValue: ''}
+    return { inputValue: '' }
   },
 
   locationHasChanged(location) {
@@ -49,15 +49,15 @@ const HomePage = React.createClass({
       if (searchQuery) {
         this.context.setSearchQuery(searchQuery)
       }
-      this.setState({inputValue: searchQuery})
-      this.setState({is404: location.query.is404})
+      this.setState({ inputValue: searchQuery })
+      this.setState({ is404: location.query.is404 })
     }
   },
 
   render() {
     const inputValue = this.state.inputValue
     const is404 = this.state.is404
-    const {searchQuery, searchResults} = this.context
+    const { searchQuery, searchResults } = this.context
     return (
       <DocumentTitle title={(is404 ? this.props.intl.formatMessage({ id: 'elementNotFound' }) + ' — ' : '') + this.props.intl.formatMessage({ id: 'appName' })}>
         <div>
@@ -66,19 +66,19 @@ const HomePage = React.createClass({
               <h4>
                 <FormattedMessage
                   id="pageDoesNotExist"
-                  values={{inputValueRef: inputValue}}
+                  values={{ inputValueRef: inputValue }}
                 />
               </h4>
               <p>
                 <FormattedMessage
                   id="notParamNotVariable"
-                  values={{inputValueRef: inputValue}}
+                  values={{ inputValueRef: inputValue }}
                 />
               </p>
               <p>
                 <FormattedMessage
                   id="checkChangelog"
-                  values={{changelogURLLink: <a href={config.changelogURL} rel="noopener" target="_blank">changelog</a>}}
+                  values={{ changelogURLLink: <a href={config.changelogURL} rel="noopener" target="_blank">changelog</a> }}
                 />
               </p>
             </div>
@@ -114,14 +114,14 @@ const SearchResults = React.createClass({
     return nextProps.searchQuery !== this.props.searchQuery
   },
   render() {
-    const {items} = this.props
+    const { items } = this.props
     return (
       <List items={items} type="unstyled">
         {item => {
-          const {description, itemType, name} = item
+          const { description, itemType, name } = item
           return (
             <Link key={`${name}-${itemType}`} to={`/${name}`}>
-              <article style={{margin: '3em 0'}}>
+              <article style={{ margin: '3em 0' }}>
                 <h4>{name}</h4>
                 {description && <p>{description}</p>}
               </article>

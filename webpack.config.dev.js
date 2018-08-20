@@ -78,7 +78,7 @@ module.exports = {
       }
     }),
 
-    new ErrorNotificationPlugin(process.platform === 'linux' && function(msg) {
+    new ErrorNotificationPlugin(process.platform === 'linux' && function (msg) {
       if (!this.lastBuildSucceeded) {
         require('child_process').exec('notify-send --hint=int:transient:1 Webpack ' + msg)
       }
@@ -99,12 +99,12 @@ module.exports = {
 
     new CopyWebpackPlugin([
       // 'to' values are relative to the public directory configured by output.path
-      {from: 'src/assets/style.css', to: '.'},
-      {from: 'node_modules/bootstrap/dist', to: 'bootstrap'},
-      {from: 'node_modules/highlight.js/styles/github-gist.css', to: '.'},
-      {from: 'node_modules/swagger-ui/dist/swagger-ui.css', to: '.'},
+      { from: 'src/assets/style.css', to: '.' },
+      { from: 'node_modules/bootstrap/dist', to: 'bootstrap' },
+      { from: 'node_modules/highlight.js/styles/github-gist.css', to: '.' },
+      { from: 'node_modules/swagger-ui/dist/swagger-ui.css', to: '.' },
     ]),
 
-    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
+    function () { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
   ],
 }

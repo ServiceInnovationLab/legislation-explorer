@@ -16,15 +16,15 @@ const Parameter = React.createClass({
     parameter: parameterShape.isRequired,
   },
   render() {
-    const {parameter} = this.props
-    const isScale = (! parameter.values)
-    //Add word break opportunities before dots for long parameter id
+    const { parameter } = this.props
+    const isScale = (!parameter.values)
+    // Add word break opportunities before dots for long parameter id
     const multilineId = parameter.id.replace(/\./g, '<wbr>.')
 
     return (
       <DocumentTitle title={parameter.id + ' — ' + this.props.intl.formatMessage({ id: 'appName' })}>
         <section>
-          <h1><code dangerouslySetInnerHTML={{__html: multilineId}}></code></h1>
+          <h1><code dangerouslySetInnerHTML={{ __html: multilineId }}></code></h1>
           { parameter.description
             ? <p className="description">{parameter.description}</p>
             : <em><FormattedMessage id="noDescription"/></em>

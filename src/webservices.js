@@ -17,7 +17,7 @@ function fetchJson(url, options) {
         if (data.error) {
           throw new Error(JSON.stringify(data.error))
         }
-        throw new Error(JSON.stringify({error: 'Unexpected return code ' + response.status}))
+        throw new Error(JSON.stringify({ error: 'Unexpected return code ' + response.status }))
       })
   )
 }
