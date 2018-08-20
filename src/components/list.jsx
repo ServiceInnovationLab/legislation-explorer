@@ -9,9 +9,9 @@ const List = React.createClass({
     items: PropTypes.array.isRequired,
   },
   render() {
-    const {children, keyProperty, items, type} = this.props
+    const { children, keyProperty, items, type } = this.props
     return (
-      <ul className={type ? `list-${type}` : null} style={{marginBottom: type === 'inline' && 0}}>
+      <ul className={type ? `list-${type}` : null} style={{ marginBottom: type === 'inline' && 0 }}>
         {
           items.map((item, idx) => (
             <li key={keyProperty ? item[keyProperty] : idx}>

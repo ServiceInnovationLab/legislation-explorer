@@ -1,11 +1,11 @@
-import {ascend, assoc, descend, flatten, isEmpty, keys, map, merge, prop, sortBy, sortWith} from 'ramda'
+import { ascend, assoc, descend, flatten, isEmpty, keys, map, merge, prop, sortBy, sortWith } from 'ramda'
 import * as diacritics from 'diacritics'
 
 function preprocessParametersAndVariables(parameters, variables) {
   return flatten(
     [parameters, variables].map(
       parametersOrVariables => keys(parametersOrVariables).map(
-        itemId => merge(parametersOrVariables[itemId], {name: itemId})
+        itemId => merge(parametersOrVariables[itemId], { name: itemId })
       )
     )
   )

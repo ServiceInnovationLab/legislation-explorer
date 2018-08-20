@@ -25,23 +25,23 @@ const ParameterOrVariablePage = React.createClass({
     variables: PropTypes.objectOf(variableShape).isRequired,
   },
   getInitialState() {
-    return {variable: null, parameter: null, waitingForResponse: true}
+    return { variable: null, parameter: null, waitingForResponse: true }
   },
   fetchPageContent(name) {
     if (this.props.variables[name]) {
       fetchVariable(name).then(
         variable => {
-          this.setState({variable: variable.data, waitingForResponse: false})
+          this.setState({ variable: variable.data, waitingForResponse: false })
         }
       )
     } else if (this.props.parameters[name]) {
       fetchParameter(name).then(
         parameter => {
-          this.setState({parameter: parameter.data, waitingForResponse: false})
+          this.setState({ parameter: parameter.data, waitingForResponse: false })
         }
       )
     } else {
-      this.setState({waitingForResponse: false})
+      this.setState({ waitingForResponse: false })
       this.handleNotFound()
     }
   },
@@ -55,18 +55,18 @@ const ParameterOrVariablePage = React.createClass({
     const name = this.props.params.name
     return this.context.router.push({
       pathname: '/',
-      query: {q: name, is404: true},
+      query: { q: name, is404: true },
       hash: '#not-found',
     })
   },
 
   render() {
     const { searchQuery, searchResults } = this.context
-    const {countryPackageName, countryPackageVersion, parameters, variables} = this.props
-    const {parameter, variable} = this.state
+    const { countryPackageName, countryPackageVersion, parameters, variables } = this.props
+    const { parameter, variable } = this.state
     const goBackLocation = {
       pathname: '/',
-      query: {q: searchQuery},
+      query: { q: searchQuery },
       hash: `#${searchInputId}`,
     }
     const otherResultsCount = searchResults.length - 1

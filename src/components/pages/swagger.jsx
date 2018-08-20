@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import SwaggerUi, {presets} from 'swagger-ui'
+import React, { Component } from 'react'
+import SwaggerUi, { presets } from 'swagger-ui'
 import { FormattedMessage } from 'react-intl'
 
 class SwaggerPage extends Component {

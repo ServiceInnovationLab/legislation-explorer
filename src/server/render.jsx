@@ -2,11 +2,11 @@
 // to the client
 
 import React from 'react'
-import {renderToString, renderToStaticMarkup} from 'react-dom/server'
-import {match, RouterContext} from 'react-router'
-import {IntlProvider} from 'react-intl'
+import { renderToString, renderToStaticMarkup } from 'react-dom/server'
+import { match, RouterContext } from 'react-router'
+import { IntlProvider } from 'react-intl'
 
-import {getLocale, getLocaleMessages} from './lang'
+import { getLocale, getLocaleMessages } from './lang'
 import routes from '../routes'
 import HtmlDocument from './html-document'
 
@@ -15,7 +15,7 @@ export default function handleRender(state) {
   return function (req, res) {
     state.locale = getLocale(req.headers['accept-language'], state.messages)
 
-    match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
+    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
       if (error) {
         res.status(500).send(error.message)
       } else if (redirectLocation) {

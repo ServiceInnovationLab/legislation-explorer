@@ -21,7 +21,7 @@ function startServer(state) {
 
   // Generic server errors (e.g. not caught by components)
   server.use((err, req, res, next) => {
-    console.error(req.method + ' ' + req.url, {error: err})
+    console.error(req.method + ' ' + req.url, { error: err })
     if (server.get('env') === 'production') {
       res.status(500).send(
         '<h1>Error: ' + err.message + '</h1>'

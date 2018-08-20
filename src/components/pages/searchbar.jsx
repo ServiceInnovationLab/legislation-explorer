@@ -1,6 +1,6 @@
 import { routerShape } from 'react-router'
 import React from 'react'
-import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import { searchInputId } from './home'
 
@@ -10,11 +10,11 @@ const SearchBarComponent = React.createClass({
   },
 
   getInitialState() {
-    return {inputValue: this.props.initialValue}
+    return { inputValue: this.props.initialValue }
   },
 
   handleInputChange(event) {
-    this.setState({inputValue: event.target.value})
+    this.setState({ inputValue: event.target.value })
     this.searchInput.scrollIntoView()
   },
 
@@ -22,13 +22,13 @@ const SearchBarComponent = React.createClass({
     event.preventDefault()
     this.context.router.push({
       pathname: '/',
-      query: {q: this.state.inputValue},
+      query: { q: this.state.inputValue },
       hash: '#search-input',
     })
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({inputValue: nextProps.initialValue})
+    this.setState({ inputValue: nextProps.initialValue })
   },
 
   render() {
@@ -36,7 +36,7 @@ const SearchBarComponent = React.createClass({
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div className="input-group input-group-lg" style={{margin: '2em 0'}}>
+          <div className="input-group input-group-lg" style={{ margin: '2em 0' }}>
             <input
               className="form-control"
               id={searchInputId}

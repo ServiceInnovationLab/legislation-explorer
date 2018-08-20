@@ -60,10 +60,10 @@ module.exports = {
 
     new CopyWebpackPlugin([
       // 'to' values are relative to the public directory configured by output.path
-      {from: 'src/assets/style.css', to: '.'},
-      {from: 'node_modules/bootstrap/dist', to: 'bootstrap'},
-      {from: 'node_modules/highlight.js/styles/github-gist.css', to: '.'},
-      {from: 'node_modules/swagger-ui/dist/swagger-ui.css', to: '.'},
+      { from: 'src/assets/style.css', to: '.' },
+      { from: 'node_modules/bootstrap/dist', to: 'bootstrap' },
+      { from: 'node_modules/highlight.js/styles/github-gist.css', to: '.' },
+      { from: 'node_modules/swagger-ui/dist/swagger-ui.css', to: '.' },
     ]),
 
     // optimizations
@@ -75,6 +75,6 @@ module.exports = {
       },
     }),
 
-    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
+    function () { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
   ],
 }
