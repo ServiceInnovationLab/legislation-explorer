@@ -1,13 +1,13 @@
-import path from 'path'
+import path from 'path';
 
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import webpack from 'webpack'
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import webpack from 'webpack';
 
-import config from './src/config'
-import writeAssets from './src/server/write-assets'
+import config from './src/config';
+import writeAssets from './src/server/write-assets';
 
 
-const assetsPath = path.join(__dirname, 'public')
+const assetsPath = path.join(__dirname, 'public');
 
 module.exports = {
   // devtool: "eval", // Transformed code
@@ -75,6 +75,6 @@ module.exports = {
       },
     }),
 
-    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))) },
+    function() { this.plugin('done', writeAssets(path.resolve(__dirname, 'webpack-assets.json'))); },
   ],
-}
+};

@@ -1,12 +1,12 @@
-import DocumentTitle from 'react-document-title'
-import { FormattedMessage, FormattedDate, FormattedNumber, injectIntl, intlShape } from 'react-intl'
-import React from 'react'
-import PropTypes from 'prop-types'
+import DocumentTitle from 'react-document-title';
+import { FormattedMessage, FormattedDate, FormattedNumber, injectIntl, intlShape } from 'react-intl';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import config from '../config'
-import { parameterShape } from '../openfisca-proptypes'
-import Scale from './scale'
-import getDayBefore from '../periods'
+import config from '../config';
+import { parameterShape } from '../openfisca-proptypes';
+import Scale from './scale';
+import getDayBefore from '../periods';
 
 const Parameter = React.createClass({
   propTypes: {
@@ -16,10 +16,10 @@ const Parameter = React.createClass({
     parameter: parameterShape.isRequired,
   },
   render() {
-    const {parameter} = this.props
-    const isScale = (! parameter.values)
+    const {parameter} = this.props;
+    const isScale = (! parameter.values);
     //Add word break opportunities before dots for long parameter id
-    const multilineId = parameter.id.replace(/\./g, '<wbr>.')
+    const multilineId = parameter.id.replace(/\./g, '<wbr>.');
 
     return (
       <DocumentTitle title={parameter.id + ' — ' + this.props.intl.formatMessage({ id: 'appName' })}>
@@ -44,7 +44,7 @@ const Parameter = React.createClass({
           </a>
         </section>
       </DocumentTitle>
-    )
+    );
   },
   renderStartStopValue(parameter, startDate, stopDate, value, index) {
     return (
@@ -64,7 +64,7 @@ const Parameter = React.createClass({
           }
         </td>
       </tr>
-    )
+    );
   },
   renderStartStopValueTable(parameter, values) {
     return (
@@ -72,16 +72,16 @@ const Parameter = React.createClass({
         <tbody>
           {Object.keys(values).sort().reverse().map(
             (startDate, index, sortedStartDates) => {
-              const nextStartDate = sortedStartDates[index - 1]
-              const stopDate = nextStartDate && getDayBefore(nextStartDate)
-              return this.renderStartStopValue(parameter, startDate, stopDate, values[startDate], index)
+              const nextStartDate = sortedStartDates[index - 1];
+              const stopDate = nextStartDate && getDayBefore(nextStartDate);
+              return this.renderStartStopValue(parameter, startDate, stopDate, values[startDate], index);
             }
           )}
         </tbody>
       </table>
-    )
+    );
   }
-})
+});
 
 
-export default injectIntl(Parameter)
+export default injectIntl(Parameter);
