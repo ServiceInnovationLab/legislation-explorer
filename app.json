@@ -1,0 +1,17 @@
+{
+  "name": "legislation-explorer",
+  "scripts": {
+    "postdeploy": "npm run build"
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {"url": "heroku/nodejs"}
+  ],
+  "engines": {
+    "npm": "9.11.2"
+  }
+}
