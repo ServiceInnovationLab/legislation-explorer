@@ -1,7 +1,7 @@
 {
   "name": "legislation-explorer",
   "scripts": {
-    "postinstall": "npm install --production && npm run build"
+    "postinstall": "npm install --production; npm run build"
   },
   "formation": {
     "web": {
