@@ -13,5 +13,12 @@
   ],
   "engines": {
     "npm": "9.11.2"
+  },
+  "env": {
+    "PATHNAME": "/",
+    "API_URL": "https://openfisca-aotearoa.herokuapp.com",
+    "CHANGELOG_URL": "https://github.com/ServiceInnovationLab//openfisca-aotearoa/blob/master/CHANGELOG.md",
+    "UI_STRINGS": "{\"en\":{\"countryName\":\"Aotearoa New Zealand\"}",
+    "NODE_ENV": "development",
   }
 }
