@@ -3,7 +3,7 @@ import config from '../config'
 import { loadTranslations } from './lang'
 import handleRender from './render'
 import { addNormalizedDescription } from '../search'
-import { fetchParameters, fetchVariables, fetchSwagger } from '../webservices'
+import { fetchEntities, fetchParameters, fetchVariables, fetchSwagger } from '../webservices'
 
 import express from 'express'
 import { assoc, map } from 'ramda'
@@ -17,7 +17,7 @@ function startServer(state) {
   server.use(favicon(path.resolve(__dirname, '../assets/favicon.ico')))
   server.use(express.static(path.resolve(__dirname, '../../public')))
 
-  server.use(handleRender(state))
+  server.use(handleRender(config.pathname, state))
 
   // Generic server errors (e.g. not caught by components)
   server.use((err, req, res, next) => {
@@ -39,9 +39,14 @@ function startServer(state) {
 }
 
 console.log('Fetching variables and parameters on Web API...')
-Promise.all([fetchParameters(), fetchVariables(), fetchSwagger()])
-  .then(([parametersResponse, variablesResponse, swaggerResponse]) => {
+Promise.all([fetchEntities(), fetchParameters(), fetchVariables(), fetchSwagger()])
+  .then(([entitiesResponse, parametersResponse, variablesResponse, swaggerResponse]) => {
     console.log('Starting server...')
+
+    const normalizedEntities = map(
+      assoc('itemType', 'entity'),
+      addNormalizedDescription(entitiesResponse.data)
+    )
     const normalizedParameters = map(
       assoc('itemType', 'parameter'),
       addNormalizedDescription(parametersResponse.data)
@@ -56,6 +61,7 @@ Promise.all([fetchParameters(), fetchVariables(), fetchSwagger()])
     const state = {
       countryPackageName: variablesResponse['country-package'],
       countryPackageVersion: variablesResponse['country-package-version'],
+      entities: normalizedEntities,
       parameters: normalizedParameters,
       variables: normalizedVariables,
       swaggerSpec: swaggerResponse.data,
