@@ -47,13 +47,13 @@ jobs:
           name: Run app
           command: npm start
           background: true
-      - run:
-          name: Start Sauce Connect
-          command: cd sc/sc-*-linux && ./bin/sc --user $SAUCE_USERNAME --api-key $SAUCE_ACCESS_KEY --tunnel-identifier "circle-$CIRCLE_BUILD_NUM-$CIRCLE_NODE_INDEX" --readyfile ~/sauce_is_ready > /tmp/sauce_log.txt
-          background: true
-      - run:
-          name: Wait for Sauce Connect
-          command: while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
+      # - run:
+      #     name: Start Sauce Connect
+      #     command: cd sc/sc-*-linux && ./bin/sc --user $SAUCE_USERNAME --api-key $SAUCE_ACCESS_KEY --tunnel-identifier "circle-$CIRCLE_BUILD_NUM-$CIRCLE_NODE_INDEX" --readyfile ~/sauce_is_ready > /tmp/sauce_log.txt
+      #     background: true
+      # - run:
+      #     name: Wait for Sauce Connect
+      #     command: while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
       - run:
           name: Wait for app to start
           command: wget --retry-connrefused --waitretry=1 --quiet http://localhost:$PORT
@@ -63,12 +63,12 @@ jobs:
       - run:
           name: Run tests
           command: npm test
-      - run:
-          name: Kill Sauce Connect
-          command: pkill sc
-      - store_artifacts:
-          path: /tmp/sauce_log.txt
-          destination: sauce-log
+      # - run:
+      #     name: Kill Sauce Connect
+      #     command: pkill sc
+      # - store_artifacts:
+      #     path: /tmp/sauce_log.txt
+      #     destination: sauce-log
   deploy:
     docker:
       - image: circleci/node:8-jessie-browsers
